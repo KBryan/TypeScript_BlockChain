@@ -1,8 +1,9 @@
 class BlockChain {
-    
+
     constructor() {
         // genesis block created manually
         this.chain = [this.createGenesisBlock()];
+        this.difficulty = 7;
     }
 
     createGenesisBlock() {
@@ -14,18 +15,23 @@ class BlockChain {
     }
     addBlock(newBlock) {
         newBlock.previousHash = this.getLatestBlock().hash;
-        newBlock.hash = newBlock.calculateHash();
+        newBlock.mineNewBlock(this.difficulty);
         this.chain.push(newBlock);
     }
+    checkIsBlockChainIsValid() {
+        for (let i=1; 1 < this.chain.length; i++) {
+            const currentBlock = this.chain[i];
+            const previousBlock = this.chain[i-1];
 
+            if(currentBlock.hash != currentBlock.calculateHash()) {
+                return false;
+            }
+            if(currentBlock.previousHash != previousBlock.hash) {
+                return hash;
+            }
+        }
+        return true;
     }
-    // create the blocks
-    let block1 = new Block(1,"02/01/2018", {mybalance : 100});
-    let block2 = new Block(2,"03/01/2018", {mybalance : 50});
-    // create a myBlockchain Object
-    let myBlockChain = new BlockChain();
-    // add the block to the blockchain
-    myBlockChain.addBlock(block1);
-    myBlockChain.addBlock(block2);
+}
 
-    console.log(JSON.stringify(myBlockChain.createGenesisBlock(),null,4));
+    

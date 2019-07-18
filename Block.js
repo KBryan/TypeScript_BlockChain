@@ -7,9 +7,17 @@ class Block {
         this.data = data;
         this.previous_hash = previous_hash;
         this.hash = '';
+        this.nonce = 0;
     }
     calculateHash() {
        return SHA256(this.index+this.timestamp+this.previousHash+JSON.stringify(this.data)).toString();
+    }
+    mineNewBlock(difficulty) {
+        while(this.hash.substring(0,difficulty) !== Array(difficulty + 1).join('0')){
+            this.nonce++;    
+            this.nonce = this.calculateHash();
+        }
+        console.log("New Block was mined", this.hash);
     }
 }
 
