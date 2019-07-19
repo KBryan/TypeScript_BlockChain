@@ -1,24 +1,25 @@
 let Block = require('./Block');
+let Transaction = require('./Transaction')
 
 module.exports = class BlockChain {
 
     constructor() {
         // genesis block created manually
+        console.log('BlockChain Constructor');
         this.chain = [this.createGenesisBlock()];
-        this.difficulty = 4;
+        this.difficulty = 1;
         this.pendingTransactions = [];
         this.miningReward = 10;
     }
 
     createGenesisBlock() {
-        return new Block("The date denesis was created", "genesis block");
-
+        return new Block("18/7/2019", "genesis block","0");
     }
 
     getLatestBlock() {
         return this.chain[this.chain.length - 1];
     }
-    
+
     minePendingTransactions(miningRewardAddress) {
         let block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
         block.mineNewBlock(this.difficulty);
@@ -40,6 +41,9 @@ module.exports = class BlockChain {
                 if(trans.fromAddress === address) {
                     balance = balance-trans.amount;
                 }
+                if(trans.toAddress === address) {
+                    balance = balance+trans.amount;
+                }
             }
         }
         return balance;
@@ -56,7 +60,7 @@ module.exports = class BlockChain {
                 return false;
             }
             if(currentBlock.previousHash != previousBlock.hash) {
-                return hash;
+                return false;
             }
         }
         return true;
