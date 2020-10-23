@@ -1,4 +1,4 @@
-# TypeScriptBlockChain
+# TypeScript BlockChain
 
 An Example of creating a BlockChain in TypeScript
 
