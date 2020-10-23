@@ -1,10 +1,10 @@
 "use strict";
 
-let BlockChain = require('./BlockChain');
-let Transaction = require('./Transaction');
-let Block = require('./Block');
 
-let saneCoin = new BlockChain();
+import {Transaction} from "./Transaction";
+import {BlockChain} from "./BlockChain";
+
+const saneCoin = new BlockChain();
 
 let transaction1 =  new Transaction("Sender", "Reciever",100);
 saneCoin.createTransaction(transaction1);

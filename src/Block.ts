@@ -1,6 +1,12 @@
 const SHA256 = require("crypto-js/sha256");
 
-module.exports = class Block {
+export class Block {
+    private timestamp:Date;
+    private transactions:string;
+    private previous_hash:string;
+    private hash:string;
+    private nonce:number;
+
         constructor (timestamp,transactions,previous_hash = '') {
         this.timestamp = timestamp;
         this.transactions = transactions;
@@ -10,7 +16,7 @@ module.exports = class Block {
     }
     calculateHash(){
         // we will be using SHA256 cyptographic function to generate the hash of this block
-        return SHA256(this.timestamp+this.previousHash+JSON.stringify(this.transactions)+this.nonce).toString();
+        return SHA256(this.timestamp+this.previous_hash+JSON.stringify(this.transactions)+this.nonce).toString();
     }
 
     mineNewBlock(difficulty){

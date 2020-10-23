@@ -1,7 +1,12 @@
-let Block = require('./Block');
-let Transaction = require('./Transaction')
+import {Block} from "./Block";
+import {Transaction} from "./Transaction";
 
-module.exports = class BlockChain {
+export class BlockChain {
+
+    private chain:Array<any>;
+    private difficulty:number;
+    private pendingTransactions:Array<any>;
+    private miningReward:number;
 
     constructor() {
         // genesis block created manually
@@ -13,7 +18,7 @@ module.exports = class BlockChain {
     }
 
     createGenesisBlock() {
-        return new Block("18/7/2019", "genesis block","0");
+        return new Block(Date.now(), "genesis block","0");
     }
 
     getLatestBlock() {
@@ -21,7 +26,7 @@ module.exports = class BlockChain {
     }
 
     minePendingTransactions(miningRewardAddress) {
-        let block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
+        let block:Block = new Block(Date.now(), this.pendingTransactions, this.getLatestBlock().hash);
         block.mineNewBlock(this.difficulty);
         console.log("Mine Success");
         this.chain.push(block);
@@ -35,7 +40,7 @@ module.exports = class BlockChain {
     }
 
     getBalanceOfAddress(address) {
-        let balance =0;
+        let balance:number =0;
         for(const block of this.chain) {
             for (const trans of block.transactions) {
                 if(trans.fromAddress === address) {
@@ -49,10 +54,8 @@ module.exports = class BlockChain {
         return balance;
     }
 
-
-
     checkIsBlockChainIsValid() {
-        for (let i=1; 1 < this.chain.length; i++) {
+        for (let i:number=1; 1 < this.chain.length; i++) {
             const currentBlock = this.chain[i];
             const previousBlock = this.chain[i-1];
 
